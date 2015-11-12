@@ -13,35 +13,36 @@ describe Apartment do
       expect(apartment.rent).to eq ("$1,000,000")
       expect(apartment.lease_start_date).to eq("1/1/2016")
       expect(apartment.lease_end_date).to eq("1/1/2017")
-      expect(apartment.vacancies).to eq(4)
+      expect(apartment.space).to eq(5)
     end
   end
 
   describe "#add_roomate" do
     it "adds an occupant to the apartment" do
       apartment.add_roomate("Andrew", "Clark")
-      expect(apartment.vacancies).to eq(3)
+      expect(apartment.space).to eq(4)
     end
 
-    it "does not add an occupant if there are no vacancies" do
+    it "does not add an occupant if there are no space" do
       apartment.add_roomate("Andrew", "Clark")
       apartment.add_roomate("Andrew", "Clark")
       apartment.add_roomate("Andrew", "Clark")
       apartment.add_roomate("Andrew", "Clark")
-      expect(apartment.add_roomate("Andrew", "Clark")).to eq("There are no vacancies")
+      expect(apartment.add_roomate("Andrew", "Clark")).to eq("There is no space")
     end
   end
 
   describe "#remove_roomate" do
     it "removes an occupant from the apartment" do
       apartment.add_roomate("Andrew", "Clark")
-      apartment.remove_roomate
-      expect(apartment.vacancies).to eq(4)
+      apartment.remove_one
+      expect(apartment.space).to eq(5)
     end
   end
 
   describe "#full?" do
-    it "shows there are no vacancies" do
+    it "shows there are no space" do
+      apartment.add_roomate("Andrew", "Clark")
       apartment.add_roomate("Andrew", "Clark")
       apartment.add_roomate("Andrew", "Clark")
       apartment.add_roomate("Andrew", "Clark")
@@ -49,7 +50,7 @@ describe Apartment do
       expect(apartment.full?).to eq(true)
     end
 
-    it "shows there are vacancies" do
+    it "shows there are space" do
       apartment.add_roomate("Andrew", "Clark")
       expect(apartment.full?).to eq(false)
     end

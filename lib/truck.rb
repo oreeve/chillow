@@ -1,34 +1,22 @@
 require_relative '../lib/occupant'
 require_relative '../lib/box'
-require 'pry'
+require_relative '../lib/modules'
 
 class Truck
-  attr_reader :boxes, :box_space
+  include Modules
+  attr_reader :objects, :space
 
   def initialize
-    @box_space = 5
-    @boxes = []
+    @space = 5
+    @objects = []
   end
 
   def add_box(first_name, last_name)
-    @box_space -= 1
-    @box_space <= 0 ? "No more boxes will fit!" : @boxes << Box.new(first_name, last_name)
+    @space -= 1
+    @space <= 0 ? "No more boxes will fit!" : @objects << Box.new(first_name, last_name)
   end
 
-  def remove_box
-    @box_space += 1
-    @boxes.pop
-  end
-
-  def remove_occupant_boxes(first)
-    @boxes.delete_if {|box| box.owner.first_name == first}
-  end
-
-  def full?
-    @box_space == 0 ? true : false
+  def remove_occupant_objects(first)
+    @objects.delete_if {|box| box.owner.first_name == first}
   end
 end
-
-truck = Truck.new
-
-# binding.pry

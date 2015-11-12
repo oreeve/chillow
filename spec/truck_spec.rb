@@ -7,15 +7,15 @@ describe Truck do
   describe ".new" do
     it "creates an empty truck with a maximum of 20 boxes" do
       expect(truck).to be_a(Truck)
-      expect(truck.box_space).to eq(5)
-      expect(truck.boxes).to be_a(Array)
+      expect(truck.space).to eq(5)
+      expect(truck.objects).to be_a(Array)
     end
   end
 
   describe "#add_box" do
     it "adds a box with an owner to the truck" do
       truck.add_box("Andrew", "Clark")
-      expect(truck.box_space).to eq (4)
+      expect(truck.space).to eq (4)
     end
 
     it "won't add more if there is no space" do
@@ -30,8 +30,8 @@ describe Truck do
   describe "#remove_box" do
     it "removes one box from the truck" do
     truck.add_box("Andrew", "Clark")
-    truck.remove_box
-    expect(truck.box_space).to eq (5)
+    truck.remove_one
+    expect(truck.space).to eq (5)
     end
   end
 
@@ -47,6 +47,17 @@ describe Truck do
       truck.add_box("Andrew", "Clark")
       truck.add_box("Andrew", "Clark")
       expect(truck.full?).to be(true)
+    end
+  end
+
+  describe "#remove_occupant_objects" do
+    it "should remove boxes from a specific owner" do
+      truck.add_box("Andrew", "Clark")
+      truck.add_box("Andrew", "Clark")
+      truck.add_box("Olivia", "Reeve")
+      truck.remove_occupant_objects("Andrew")
+      expect(truck.objects.count).to eq (1)
+      expect(truck.objects).to_not be_empty
     end
   end
 end
